@@ -7,6 +7,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 
 #define LED_BLUE 0b01000000
 #define LED_BAT_GREEN1 0b00010000
@@ -17,16 +18,34 @@
 
 void led_blinking_init();
 void ADC_init();
+void USART_init();
+void USART_Transmit(unsigned char data);
+unsigned char USART_Receive();
+
+// ENGINES
+void turn_off_all_engines();
+
+uint8_t safety_variable; // turn off engines when bluetooth connection is broken
 
 int main()
 {
+	safety_variable = 0;
 	led_blinking_init();
 	ADC_init();
+	USART_init();
 	sei();
 
-	while(1) {}
+	while(1)
+	{
+	}
 
 	return 0;
+}
+
+void turn_off_all_engines()
+{
+	PORTB &= ~(LED_BLUETOOTH);
+	return;
 }
 
 void led_blinking_init()
@@ -46,8 +65,44 @@ void ADC_init()
 	DDRB |= LED_BAT_GREEN1|LED_BAT_GREEN2|LED_BAT_RED|LED_BAT_YELLOW;
 }
 
-ISR (TIMER0_OVF_vect) // diode blinking + ADC read
+void USART_init()
 {
+	DDRD = 0b10;
+	PORTD = 0;
+
+	DDRB |= LED_BLUETOOTH;
+	UBRRL = 12;
+	UBRRH = 0;
+	UCSRA = (1 << U2X);
+	// Enable Receiver and Transmitter
+	UCSRB = (1 << RXCIE) | (1 << RXEN) | (1 << TXEN);
+	// 8 data, 1 stop bit
+	UCSRC = (1 << URSEL) | (3 << UCSZ0);
+}
+
+void USART_Transmit( unsigned char data )
+{
+	/* Wait for empty transmit buffer */
+	while ( !( UCSRA & (1<<UDRE)) )
+	;
+	/* Put data into buffer, sends the data */
+	UDR = data;
+}
+
+unsigned char USART_Receive( void )
+{
+	/* Wait for data to be received */
+	while ( !(UCSRA & (1<<RXC)) );
+	/* Get and return received data from buffer */
+	return UDR;
+}
+
+ISR (TIMER0_OVF_vect) // diode blinking + ADC read, safety_variable
+{
+	if (safety_variable >= 3)
+			turn_off_all_engines();
+	safety_variable++;
+
 	PORTB ^= LED_BLUE;
 
 	if (ADCH >= 118) // 13 V
@@ -69,4 +124,10 @@ ISR (TIMER0_OVF_vect) // diode blinking + ADC read
 	}
 
 	ADCSRA |= 0b01000000;
+}
+
+ISR (USART_RXC_vect)
+{
+	PORTB |= LED_BLUETOOTH;
+	unsigned char data = USART_Receive();
 }

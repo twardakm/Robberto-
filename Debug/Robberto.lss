@@ -3,35 +3,37 @@ Robberto.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000018c  00000000  00000000  00000054  2**1
+  0 .text         000002f0  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .stab         00000450  00000000  00000000  000001e0  2**2
+  1 .bss          00000001  00800060  00800060  00000364  2**0
+                  ALLOC
+  2 .stab         0000063c  00000000  00000000  00000364  2**2
                   CONTENTS, READONLY, DEBUGGING
-  2 .stabstr      000006ba  00000000  00000000  00000630  2**0
+  3 .stabstr      0000075b  00000000  00000000  000009a0  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
-   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
-   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
-   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
-   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
-   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
-   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
-   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
-  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
-  12:	4c c0       	rjmp	.+152    	; 0xac <__vector_9>
-  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
-  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
-  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
-  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
-  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
-  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
-  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
-  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
-  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	b5 c0       	rjmp	.+362    	; 0x17e <__vector_9>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	37 c1       	rjmp	.+622    	; 0x286 <__vector_11>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
 
 00000026 <__ctors_end>:
   26:	11 24       	eor	r1, r1
@@ -40,244 +42,484 @@ Disassembly of section .text:
   2c:	d4 e0       	ldi	r29, 0x04	; 4
   2e:	de bf       	out	0x3e, r29	; 62
   30:	cd bf       	out	0x3d, r28	; 61
-  32:	02 d0       	rcall	.+4      	; 0x38 <main>
-  34:	a9 c0       	rjmp	.+338    	; 0x188 <_exit>
 
-00000036 <__bad_interrupt>:
-  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+00000032 <__do_clear_bss>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
 
-00000038 <main>:
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
 
-void led_blinking_init();
-void ADC_init();
+0000003c <.do_clear_bss_start>:
+  3c:	a1 36       	cpi	r26, 0x61	; 97
+  3e:	b1 07       	cpc	r27, r17
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	02 d0       	rcall	.+4      	; 0x48 <main>
+  44:	53 c1       	rjmp	.+678    	; 0x2ec <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <main>:
+void turn_off_all_engines();
+
+uint8_t safety_variable; // turn off engines when bluetooth connection is broken
 
 int main()
-{
-  38:	df 93       	push	r29
-  3a:	cf 93       	push	r28
-  3c:	cd b7       	in	r28, 0x3d	; 61
-  3e:	de b7       	in	r29, 0x3e	; 62
-	led_blinking_init();
-  40:	03 d0       	rcall	.+6      	; 0x48 <led_blinking_init>
-	ADC_init();
-  42:	1e d0       	rcall	.+60     	; 0x80 <ADC_init>
-	sei();
-  44:	78 94       	sei
-  46:	ff cf       	rjmp	.-2      	; 0x46 <__SREG__+0x7>
-
-00000048 <led_blinking_init>:
-
-	return 0;
-}
-
-void led_blinking_init()
 {
   48:	df 93       	push	r29
   4a:	cf 93       	push	r28
   4c:	cd b7       	in	r28, 0x3d	; 61
   4e:	de b7       	in	r29, 0x3e	; 62
+	safety_variable = 0;
+  50:	10 92 60 00 	sts	0x0060, r1
+	led_blinking_init();
+  54:	14 d0       	rcall	.+40     	; 0x7e <led_blinking_init>
+	ADC_init();
+  56:	2f d0       	rcall	.+94     	; 0xb6 <ADC_init>
+	USART_init();
+  58:	44 d0       	rcall	.+136    	; 0xe2 <USART_init>
+	sei();
+  5a:	78 94       	sei
+  5c:	ff cf       	rjmp	.-2      	; 0x5c <main+0x14>
+
+0000005e <turn_off_all_engines>:
+
+	return 0;
+}
+
+void turn_off_all_engines()
+{
+  5e:	df 93       	push	r29
+  60:	cf 93       	push	r28
+  62:	cd b7       	in	r28, 0x3d	; 61
+  64:	de b7       	in	r29, 0x3e	; 62
+	PORTB &= ~(LED_BLUETOOTH);
+  66:	a8 e3       	ldi	r26, 0x38	; 56
+  68:	b0 e0       	ldi	r27, 0x00	; 0
+  6a:	e8 e3       	ldi	r30, 0x38	; 56
+  6c:	f0 e0       	ldi	r31, 0x00	; 0
+  6e:	80 81       	ld	r24, Z
+  70:	8e 7f       	andi	r24, 0xFE	; 254
+  72:	8c 93       	st	X, r24
+	safety_variable = 0;
+  74:	10 92 60 00 	sts	0x0060, r1
+	return;
+}
+  78:	cf 91       	pop	r28
+  7a:	df 91       	pop	r29
+  7c:	08 95       	ret
+
+0000007e <led_blinking_init>:
+
+void led_blinking_init()
+{
+  7e:	df 93       	push	r29
+  80:	cf 93       	push	r28
+  82:	cd b7       	in	r28, 0x3d	; 61
+  84:	de b7       	in	r29, 0x3e	; 62
 	DDRB |= LED_BLUE;
-  50:	a7 e3       	ldi	r26, 0x37	; 55
-  52:	b0 e0       	ldi	r27, 0x00	; 0
-  54:	e7 e3       	ldi	r30, 0x37	; 55
-  56:	f0 e0       	ldi	r31, 0x00	; 0
-  58:	80 81       	ld	r24, Z
-  5a:	80 64       	ori	r24, 0x40	; 64
-  5c:	8c 93       	st	X, r24
+  86:	a7 e3       	ldi	r26, 0x37	; 55
+  88:	b0 e0       	ldi	r27, 0x00	; 0
+  8a:	e7 e3       	ldi	r30, 0x37	; 55
+  8c:	f0 e0       	ldi	r31, 0x00	; 0
+  8e:	80 81       	ld	r24, Z
+  90:	80 64       	ori	r24, 0x40	; 64
+  92:	8c 93       	st	X, r24
 
 	// Timer 0 Configuration
 	TCCR0 |= 0b101; // prescaler 1024
-  5e:	a3 e5       	ldi	r26, 0x53	; 83
-  60:	b0 e0       	ldi	r27, 0x00	; 0
-  62:	e3 e5       	ldi	r30, 0x53	; 83
-  64:	f0 e0       	ldi	r31, 0x00	; 0
-  66:	80 81       	ld	r24, Z
-  68:	85 60       	ori	r24, 0x05	; 5
-  6a:	8c 93       	st	X, r24
+  94:	a3 e5       	ldi	r26, 0x53	; 83
+  96:	b0 e0       	ldi	r27, 0x00	; 0
+  98:	e3 e5       	ldi	r30, 0x53	; 83
+  9a:	f0 e0       	ldi	r31, 0x00	; 0
+  9c:	80 81       	ld	r24, Z
+  9e:	85 60       	ori	r24, 0x05	; 5
+  a0:	8c 93       	st	X, r24
 	TIMSK |= 1; // interrupt
-  6c:	a9 e5       	ldi	r26, 0x59	; 89
-  6e:	b0 e0       	ldi	r27, 0x00	; 0
-  70:	e9 e5       	ldi	r30, 0x59	; 89
-  72:	f0 e0       	ldi	r31, 0x00	; 0
-  74:	80 81       	ld	r24, Z
-  76:	81 60       	ori	r24, 0x01	; 1
-  78:	8c 93       	st	X, r24
+  a2:	a9 e5       	ldi	r26, 0x59	; 89
+  a4:	b0 e0       	ldi	r27, 0x00	; 0
+  a6:	e9 e5       	ldi	r30, 0x59	; 89
+  a8:	f0 e0       	ldi	r31, 0x00	; 0
+  aa:	80 81       	ld	r24, Z
+  ac:	81 60       	ori	r24, 0x01	; 1
+  ae:	8c 93       	st	X, r24
 }
-  7a:	cf 91       	pop	r28
-  7c:	df 91       	pop	r29
-  7e:	08 95       	ret
+  b0:	cf 91       	pop	r28
+  b2:	df 91       	pop	r29
+  b4:	08 95       	ret
 
-00000080 <ADC_init>:
+000000b6 <ADC_init>:
 
 void ADC_init()
 {
-  80:	df 93       	push	r29
-  82:	cf 93       	push	r28
-  84:	cd b7       	in	r28, 0x3d	; 61
-  86:	de b7       	in	r29, 0x3e	; 62
+  b6:	df 93       	push	r29
+  b8:	cf 93       	push	r28
+  ba:	cd b7       	in	r28, 0x3d	; 61
+  bc:	de b7       	in	r29, 0x3e	; 62
 	ADMUX = 0b11100101; // internal 2.56, ADC5, left adjustment
-  88:	e7 e2       	ldi	r30, 0x27	; 39
-  8a:	f0 e0       	ldi	r31, 0x00	; 0
-  8c:	85 ee       	ldi	r24, 0xE5	; 229
-  8e:	80 83       	st	Z, r24
+  be:	e7 e2       	ldi	r30, 0x27	; 39
+  c0:	f0 e0       	ldi	r31, 0x00	; 0
+  c2:	85 ee       	ldi	r24, 0xE5	; 229
+  c4:	80 83       	st	Z, r24
 	ADCSRA = 0b11000111; // single mode, without interrupt, CLK / 128
-  90:	e6 e2       	ldi	r30, 0x26	; 38
-  92:	f0 e0       	ldi	r31, 0x00	; 0
-  94:	87 ec       	ldi	r24, 0xC7	; 199
-  96:	80 83       	st	Z, r24
+  c6:	e6 e2       	ldi	r30, 0x26	; 38
+  c8:	f0 e0       	ldi	r31, 0x00	; 0
+  ca:	87 ec       	ldi	r24, 0xC7	; 199
+  cc:	80 83       	st	Z, r24
 
 	DDRB |= LED_BAT_GREEN1|LED_BAT_GREEN2|LED_BAT_RED|LED_BAT_YELLOW;
-  98:	a7 e3       	ldi	r26, 0x37	; 55
-  9a:	b0 e0       	ldi	r27, 0x00	; 0
-  9c:	e7 e3       	ldi	r30, 0x37	; 55
-  9e:	f0 e0       	ldi	r31, 0x00	; 0
-  a0:	80 81       	ld	r24, Z
-  a2:	8e 61       	ori	r24, 0x1E	; 30
-  a4:	8c 93       	st	X, r24
+  ce:	a7 e3       	ldi	r26, 0x37	; 55
+  d0:	b0 e0       	ldi	r27, 0x00	; 0
+  d2:	e7 e3       	ldi	r30, 0x37	; 55
+  d4:	f0 e0       	ldi	r31, 0x00	; 0
+  d6:	80 81       	ld	r24, Z
+  d8:	8e 61       	ori	r24, 0x1E	; 30
+  da:	8c 93       	st	X, r24
 }
-  a6:	cf 91       	pop	r28
-  a8:	df 91       	pop	r29
-  aa:	08 95       	ret
+  dc:	cf 91       	pop	r28
+  de:	df 91       	pop	r29
+  e0:	08 95       	ret
 
-000000ac <__vector_9>:
+000000e2 <USART_init>:
 
-ISR (TIMER0_OVF_vect) // diode blinking + ADC read
+void USART_init()
 {
-  ac:	1f 92       	push	r1
-  ae:	0f 92       	push	r0
-  b0:	0f b6       	in	r0, 0x3f	; 63
-  b2:	0f 92       	push	r0
-  b4:	11 24       	eor	r1, r1
-  b6:	8f 93       	push	r24
-  b8:	9f 93       	push	r25
-  ba:	af 93       	push	r26
-  bc:	bf 93       	push	r27
-  be:	ef 93       	push	r30
-  c0:	ff 93       	push	r31
-  c2:	df 93       	push	r29
-  c4:	cf 93       	push	r28
-  c6:	cd b7       	in	r28, 0x3d	; 61
-  c8:	de b7       	in	r29, 0x3e	; 62
+  e2:	df 93       	push	r29
+  e4:	cf 93       	push	r28
+  e6:	cd b7       	in	r28, 0x3d	; 61
+  e8:	de b7       	in	r29, 0x3e	; 62
+	DDRD = 0b10;
+  ea:	e1 e3       	ldi	r30, 0x31	; 49
+  ec:	f0 e0       	ldi	r31, 0x00	; 0
+  ee:	82 e0       	ldi	r24, 0x02	; 2
+  f0:	80 83       	st	Z, r24
+	PORTD = 0;
+  f2:	e2 e3       	ldi	r30, 0x32	; 50
+  f4:	f0 e0       	ldi	r31, 0x00	; 0
+  f6:	10 82       	st	Z, r1
+
+	DDRB |= LED_BLUETOOTH;
+  f8:	a7 e3       	ldi	r26, 0x37	; 55
+  fa:	b0 e0       	ldi	r27, 0x00	; 0
+  fc:	e7 e3       	ldi	r30, 0x37	; 55
+  fe:	f0 e0       	ldi	r31, 0x00	; 0
+ 100:	80 81       	ld	r24, Z
+ 102:	81 60       	ori	r24, 0x01	; 1
+ 104:	8c 93       	st	X, r24
+	UBRRL = 12;
+ 106:	e9 e2       	ldi	r30, 0x29	; 41
+ 108:	f0 e0       	ldi	r31, 0x00	; 0
+ 10a:	8c e0       	ldi	r24, 0x0C	; 12
+ 10c:	80 83       	st	Z, r24
+	UBRRH = 0;
+ 10e:	e0 e4       	ldi	r30, 0x40	; 64
+ 110:	f0 e0       	ldi	r31, 0x00	; 0
+ 112:	10 82       	st	Z, r1
+	UCSRA = (1 << U2X);
+ 114:	eb e2       	ldi	r30, 0x2B	; 43
+ 116:	f0 e0       	ldi	r31, 0x00	; 0
+ 118:	82 e0       	ldi	r24, 0x02	; 2
+ 11a:	80 83       	st	Z, r24
+	// Enable Receiver and Transmitter
+	UCSRB = (1 << RXCIE) | (1 << RXEN) | (1 << TXEN);
+ 11c:	ea e2       	ldi	r30, 0x2A	; 42
+ 11e:	f0 e0       	ldi	r31, 0x00	; 0
+ 120:	88 e9       	ldi	r24, 0x98	; 152
+ 122:	80 83       	st	Z, r24
+	// 8 data, 1 stop bit
+	UCSRC = (1 << URSEL) | (3 << UCSZ0);
+ 124:	e0 e4       	ldi	r30, 0x40	; 64
+ 126:	f0 e0       	ldi	r31, 0x00	; 0
+ 128:	86 e8       	ldi	r24, 0x86	; 134
+ 12a:	80 83       	st	Z, r24
+}
+ 12c:	cf 91       	pop	r28
+ 12e:	df 91       	pop	r29
+ 130:	08 95       	ret
+
+00000132 <USART_Transmit>:
+
+void USART_Transmit( unsigned char data )
+{
+ 132:	df 93       	push	r29
+ 134:	cf 93       	push	r28
+ 136:	0f 92       	push	r0
+ 138:	cd b7       	in	r28, 0x3d	; 61
+ 13a:	de b7       	in	r29, 0x3e	; 62
+ 13c:	89 83       	std	Y+1, r24	; 0x01
+	/* Wait for empty transmit buffer */
+	while ( !( UCSRA & (1<<UDRE)) )
+ 13e:	eb e2       	ldi	r30, 0x2B	; 43
+ 140:	f0 e0       	ldi	r31, 0x00	; 0
+ 142:	80 81       	ld	r24, Z
+ 144:	88 2f       	mov	r24, r24
+ 146:	90 e0       	ldi	r25, 0x00	; 0
+ 148:	80 72       	andi	r24, 0x20	; 32
+ 14a:	90 70       	andi	r25, 0x00	; 0
+ 14c:	00 97       	sbiw	r24, 0x00	; 0
+ 14e:	b9 f3       	breq	.-18     	; 0x13e <USART_Transmit+0xc>
+	;
+	/* Put data into buffer, sends the data */
+	UDR = data;
+ 150:	ec e2       	ldi	r30, 0x2C	; 44
+ 152:	f0 e0       	ldi	r31, 0x00	; 0
+ 154:	89 81       	ldd	r24, Y+1	; 0x01
+ 156:	80 83       	st	Z, r24
+}
+ 158:	0f 90       	pop	r0
+ 15a:	cf 91       	pop	r28
+ 15c:	df 91       	pop	r29
+ 15e:	08 95       	ret
+
+00000160 <USART_Receive>:
+
+unsigned char USART_Receive( void )
+{
+ 160:	df 93       	push	r29
+ 162:	cf 93       	push	r28
+ 164:	cd b7       	in	r28, 0x3d	; 61
+ 166:	de b7       	in	r29, 0x3e	; 62
+	/* Wait for data to be received */
+	while ( !(UCSRA & (1<<RXC)) );
+ 168:	eb e2       	ldi	r30, 0x2B	; 43
+ 16a:	f0 e0       	ldi	r31, 0x00	; 0
+ 16c:	80 81       	ld	r24, Z
+ 16e:	88 23       	and	r24, r24
+ 170:	dc f7       	brge	.-10     	; 0x168 <USART_Receive+0x8>
+	/* Get and return received data from buffer */
+	return UDR;
+ 172:	ec e2       	ldi	r30, 0x2C	; 44
+ 174:	f0 e0       	ldi	r31, 0x00	; 0
+ 176:	80 81       	ld	r24, Z
+}
+ 178:	cf 91       	pop	r28
+ 17a:	df 91       	pop	r29
+ 17c:	08 95       	ret
+
+0000017e <__vector_9>:
+
+ISR (TIMER0_OVF_vect) // diode blinking + ADC read, safety_variable
+{
+ 17e:	1f 92       	push	r1
+ 180:	0f 92       	push	r0
+ 182:	0f b6       	in	r0, 0x3f	; 63
+ 184:	0f 92       	push	r0
+ 186:	11 24       	eor	r1, r1
+ 188:	2f 93       	push	r18
+ 18a:	3f 93       	push	r19
+ 18c:	4f 93       	push	r20
+ 18e:	5f 93       	push	r21
+ 190:	6f 93       	push	r22
+ 192:	7f 93       	push	r23
+ 194:	8f 93       	push	r24
+ 196:	9f 93       	push	r25
+ 198:	af 93       	push	r26
+ 19a:	bf 93       	push	r27
+ 19c:	ef 93       	push	r30
+ 19e:	ff 93       	push	r31
+ 1a0:	df 93       	push	r29
+ 1a2:	cf 93       	push	r28
+ 1a4:	cd b7       	in	r28, 0x3d	; 61
+ 1a6:	de b7       	in	r29, 0x3e	; 62
+	if (safety_variable >= 3)
+ 1a8:	80 91 60 00 	lds	r24, 0x0060
+ 1ac:	83 30       	cpi	r24, 0x03	; 3
+ 1ae:	08 f0       	brcs	.+2      	; 0x1b2 <__vector_9+0x34>
+			turn_off_all_engines();
+ 1b0:	56 df       	rcall	.-340    	; 0x5e <turn_off_all_engines>
+	safety_variable++;
+ 1b2:	80 91 60 00 	lds	r24, 0x0060
+ 1b6:	8f 5f       	subi	r24, 0xFF	; 255
+ 1b8:	80 93 60 00 	sts	0x0060, r24
+
 	PORTB ^= LED_BLUE;
-  ca:	a8 e3       	ldi	r26, 0x38	; 56
-  cc:	b0 e0       	ldi	r27, 0x00	; 0
-  ce:	e8 e3       	ldi	r30, 0x38	; 56
-  d0:	f0 e0       	ldi	r31, 0x00	; 0
-  d2:	90 81       	ld	r25, Z
-  d4:	80 e4       	ldi	r24, 0x40	; 64
-  d6:	89 27       	eor	r24, r25
-  d8:	8c 93       	st	X, r24
+ 1bc:	a8 e3       	ldi	r26, 0x38	; 56
+ 1be:	b0 e0       	ldi	r27, 0x00	; 0
+ 1c0:	e8 e3       	ldi	r30, 0x38	; 56
+ 1c2:	f0 e0       	ldi	r31, 0x00	; 0
+ 1c4:	90 81       	ld	r25, Z
+ 1c6:	80 e4       	ldi	r24, 0x40	; 64
+ 1c8:	89 27       	eor	r24, r25
+ 1ca:	8c 93       	st	X, r24
 
 	if (ADCH >= 118) // 13 V
-  da:	e5 e2       	ldi	r30, 0x25	; 37
-  dc:	f0 e0       	ldi	r31, 0x00	; 0
-  de:	80 81       	ld	r24, Z
-  e0:	86 37       	cpi	r24, 0x76	; 118
-  e2:	40 f0       	brcs	.+16     	; 0xf4 <__vector_9+0x48>
+ 1cc:	e5 e2       	ldi	r30, 0x25	; 37
+ 1ce:	f0 e0       	ldi	r31, 0x00	; 0
+ 1d0:	80 81       	ld	r24, Z
+ 1d2:	86 37       	cpi	r24, 0x76	; 118
+ 1d4:	40 f0       	brcs	.+16     	; 0x1e6 <__vector_9+0x68>
 		PORTB |= LED_BAT_GREEN1|LED_BAT_GREEN2|LED_BAT_RED|LED_BAT_YELLOW;
-  e4:	a8 e3       	ldi	r26, 0x38	; 56
-  e6:	b0 e0       	ldi	r27, 0x00	; 0
-  e8:	e8 e3       	ldi	r30, 0x38	; 56
-  ea:	f0 e0       	ldi	r31, 0x00	; 0
-  ec:	80 81       	ld	r24, Z
-  ee:	8e 61       	ori	r24, 0x1E	; 30
-  f0:	8c 93       	st	X, r24
-  f2:	36 c0       	rjmp	.+108    	; 0x160 <__vector_9+0xb4>
+ 1d6:	a8 e3       	ldi	r26, 0x38	; 56
+ 1d8:	b0 e0       	ldi	r27, 0x00	; 0
+ 1da:	e8 e3       	ldi	r30, 0x38	; 56
+ 1dc:	f0 e0       	ldi	r31, 0x00	; 0
+ 1de:	80 81       	ld	r24, Z
+ 1e0:	8e 61       	ori	r24, 0x1E	; 30
+ 1e2:	8c 93       	st	X, r24
+ 1e4:	36 c0       	rjmp	.+108    	; 0x252 <__vector_9+0xd4>
 	else if (ADCH >= 113) // 12,5 V
-  f4:	e5 e2       	ldi	r30, 0x25	; 37
-  f6:	f0 e0       	ldi	r31, 0x00	; 0
-  f8:	80 81       	ld	r24, Z
-  fa:	81 37       	cpi	r24, 0x71	; 113
-  fc:	78 f0       	brcs	.+30     	; 0x11c <__vector_9+0x70>
+ 1e6:	e5 e2       	ldi	r30, 0x25	; 37
+ 1e8:	f0 e0       	ldi	r31, 0x00	; 0
+ 1ea:	80 81       	ld	r24, Z
+ 1ec:	81 37       	cpi	r24, 0x71	; 113
+ 1ee:	78 f0       	brcs	.+30     	; 0x20e <__vector_9+0x90>
 	{
 		PORTB |= LED_BAT_GREEN2 | LED_BAT_YELLOW | LED_BAT_RED;
-  fe:	a8 e3       	ldi	r26, 0x38	; 56
- 100:	b0 e0       	ldi	r27, 0x00	; 0
- 102:	e8 e3       	ldi	r30, 0x38	; 56
- 104:	f0 e0       	ldi	r31, 0x00	; 0
- 106:	80 81       	ld	r24, Z
- 108:	8e 60       	ori	r24, 0x0E	; 14
- 10a:	8c 93       	st	X, r24
+ 1f0:	a8 e3       	ldi	r26, 0x38	; 56
+ 1f2:	b0 e0       	ldi	r27, 0x00	; 0
+ 1f4:	e8 e3       	ldi	r30, 0x38	; 56
+ 1f6:	f0 e0       	ldi	r31, 0x00	; 0
+ 1f8:	80 81       	ld	r24, Z
+ 1fa:	8e 60       	ori	r24, 0x0E	; 14
+ 1fc:	8c 93       	st	X, r24
 		PORTB &= ~LED_BAT_GREEN1;
- 10c:	a8 e3       	ldi	r26, 0x38	; 56
- 10e:	b0 e0       	ldi	r27, 0x00	; 0
- 110:	e8 e3       	ldi	r30, 0x38	; 56
- 112:	f0 e0       	ldi	r31, 0x00	; 0
- 114:	80 81       	ld	r24, Z
- 116:	8f 7e       	andi	r24, 0xEF	; 239
- 118:	8c 93       	st	X, r24
- 11a:	22 c0       	rjmp	.+68     	; 0x160 <__vector_9+0xb4>
+ 1fe:	a8 e3       	ldi	r26, 0x38	; 56
+ 200:	b0 e0       	ldi	r27, 0x00	; 0
+ 202:	e8 e3       	ldi	r30, 0x38	; 56
+ 204:	f0 e0       	ldi	r31, 0x00	; 0
+ 206:	80 81       	ld	r24, Z
+ 208:	8f 7e       	andi	r24, 0xEF	; 239
+ 20a:	8c 93       	st	X, r24
+ 20c:	22 c0       	rjmp	.+68     	; 0x252 <__vector_9+0xd4>
 	}
 	else if (ADCH >= 109) // 12 V
- 11c:	e5 e2       	ldi	r30, 0x25	; 37
- 11e:	f0 e0       	ldi	r31, 0x00	; 0
- 120:	80 81       	ld	r24, Z
- 122:	8d 36       	cpi	r24, 0x6D	; 109
- 124:	78 f0       	brcs	.+30     	; 0x144 <__vector_9+0x98>
+ 20e:	e5 e2       	ldi	r30, 0x25	; 37
+ 210:	f0 e0       	ldi	r31, 0x00	; 0
+ 212:	80 81       	ld	r24, Z
+ 214:	8d 36       	cpi	r24, 0x6D	; 109
+ 216:	78 f0       	brcs	.+30     	; 0x236 <__vector_9+0xb8>
 	{
 		PORTB |= LED_BAT_YELLOW | LED_BAT_RED;
- 126:	a8 e3       	ldi	r26, 0x38	; 56
- 128:	b0 e0       	ldi	r27, 0x00	; 0
- 12a:	e8 e3       	ldi	r30, 0x38	; 56
- 12c:	f0 e0       	ldi	r31, 0x00	; 0
- 12e:	80 81       	ld	r24, Z
- 130:	86 60       	ori	r24, 0x06	; 6
- 132:	8c 93       	st	X, r24
+ 218:	a8 e3       	ldi	r26, 0x38	; 56
+ 21a:	b0 e0       	ldi	r27, 0x00	; 0
+ 21c:	e8 e3       	ldi	r30, 0x38	; 56
+ 21e:	f0 e0       	ldi	r31, 0x00	; 0
+ 220:	80 81       	ld	r24, Z
+ 222:	86 60       	ori	r24, 0x06	; 6
+ 224:	8c 93       	st	X, r24
 		PORTB &= ~(LED_BAT_GREEN1 | LED_BAT_GREEN2);
- 134:	a8 e3       	ldi	r26, 0x38	; 56
- 136:	b0 e0       	ldi	r27, 0x00	; 0
- 138:	e8 e3       	ldi	r30, 0x38	; 56
- 13a:	f0 e0       	ldi	r31, 0x00	; 0
- 13c:	80 81       	ld	r24, Z
- 13e:	87 7e       	andi	r24, 0xE7	; 231
- 140:	8c 93       	st	X, r24
- 142:	0e c0       	rjmp	.+28     	; 0x160 <__vector_9+0xb4>
+ 226:	a8 e3       	ldi	r26, 0x38	; 56
+ 228:	b0 e0       	ldi	r27, 0x00	; 0
+ 22a:	e8 e3       	ldi	r30, 0x38	; 56
+ 22c:	f0 e0       	ldi	r31, 0x00	; 0
+ 22e:	80 81       	ld	r24, Z
+ 230:	87 7e       	andi	r24, 0xE7	; 231
+ 232:	8c 93       	st	X, r24
+ 234:	0e c0       	rjmp	.+28     	; 0x252 <__vector_9+0xd4>
 	}
 	else
 	{
 		PORTB |= LED_BAT_RED;
- 144:	a8 e3       	ldi	r26, 0x38	; 56
- 146:	b0 e0       	ldi	r27, 0x00	; 0
- 148:	e8 e3       	ldi	r30, 0x38	; 56
- 14a:	f0 e0       	ldi	r31, 0x00	; 0
- 14c:	80 81       	ld	r24, Z
- 14e:	82 60       	ori	r24, 0x02	; 2
- 150:	8c 93       	st	X, r24
+ 236:	a8 e3       	ldi	r26, 0x38	; 56
+ 238:	b0 e0       	ldi	r27, 0x00	; 0
+ 23a:	e8 e3       	ldi	r30, 0x38	; 56
+ 23c:	f0 e0       	ldi	r31, 0x00	; 0
+ 23e:	80 81       	ld	r24, Z
+ 240:	82 60       	ori	r24, 0x02	; 2
+ 242:	8c 93       	st	X, r24
 		PORTB &= ~(LED_BAT_GREEN1 | LED_BAT_GREEN2 | LED_BAT_YELLOW);
- 152:	a8 e3       	ldi	r26, 0x38	; 56
- 154:	b0 e0       	ldi	r27, 0x00	; 0
- 156:	e8 e3       	ldi	r30, 0x38	; 56
- 158:	f0 e0       	ldi	r31, 0x00	; 0
- 15a:	80 81       	ld	r24, Z
- 15c:	83 7e       	andi	r24, 0xE3	; 227
- 15e:	8c 93       	st	X, r24
+ 244:	a8 e3       	ldi	r26, 0x38	; 56
+ 246:	b0 e0       	ldi	r27, 0x00	; 0
+ 248:	e8 e3       	ldi	r30, 0x38	; 56
+ 24a:	f0 e0       	ldi	r31, 0x00	; 0
+ 24c:	80 81       	ld	r24, Z
+ 24e:	83 7e       	andi	r24, 0xE3	; 227
+ 250:	8c 93       	st	X, r24
 	}
 
 	ADCSRA |= 0b01000000;
- 160:	a6 e2       	ldi	r26, 0x26	; 38
- 162:	b0 e0       	ldi	r27, 0x00	; 0
- 164:	e6 e2       	ldi	r30, 0x26	; 38
- 166:	f0 e0       	ldi	r31, 0x00	; 0
- 168:	80 81       	ld	r24, Z
- 16a:	80 64       	ori	r24, 0x40	; 64
- 16c:	8c 93       	st	X, r24
+ 252:	a6 e2       	ldi	r26, 0x26	; 38
+ 254:	b0 e0       	ldi	r27, 0x00	; 0
+ 256:	e6 e2       	ldi	r30, 0x26	; 38
+ 258:	f0 e0       	ldi	r31, 0x00	; 0
+ 25a:	80 81       	ld	r24, Z
+ 25c:	80 64       	ori	r24, 0x40	; 64
+ 25e:	8c 93       	st	X, r24
 }
- 16e:	cf 91       	pop	r28
- 170:	df 91       	pop	r29
- 172:	ff 91       	pop	r31
- 174:	ef 91       	pop	r30
- 176:	bf 91       	pop	r27
- 178:	af 91       	pop	r26
- 17a:	9f 91       	pop	r25
- 17c:	8f 91       	pop	r24
- 17e:	0f 90       	pop	r0
- 180:	0f be       	out	0x3f, r0	; 63
- 182:	0f 90       	pop	r0
- 184:	1f 90       	pop	r1
- 186:	18 95       	reti
+ 260:	cf 91       	pop	r28
+ 262:	df 91       	pop	r29
+ 264:	ff 91       	pop	r31
+ 266:	ef 91       	pop	r30
+ 268:	bf 91       	pop	r27
+ 26a:	af 91       	pop	r26
+ 26c:	9f 91       	pop	r25
+ 26e:	8f 91       	pop	r24
+ 270:	7f 91       	pop	r23
+ 272:	6f 91       	pop	r22
+ 274:	5f 91       	pop	r21
+ 276:	4f 91       	pop	r20
+ 278:	3f 91       	pop	r19
+ 27a:	2f 91       	pop	r18
+ 27c:	0f 90       	pop	r0
+ 27e:	0f be       	out	0x3f, r0	; 63
+ 280:	0f 90       	pop	r0
+ 282:	1f 90       	pop	r1
+ 284:	18 95       	reti
 
-00000188 <_exit>:
- 188:	f8 94       	cli
+00000286 <__vector_11>:
 
-0000018a <__stop_program>:
- 18a:	ff cf       	rjmp	.-2      	; 0x18a <__stop_program>
+ISR (USART_RXC_vect)
+{
+ 286:	1f 92       	push	r1
+ 288:	0f 92       	push	r0
+ 28a:	0f b6       	in	r0, 0x3f	; 63
+ 28c:	0f 92       	push	r0
+ 28e:	11 24       	eor	r1, r1
+ 290:	2f 93       	push	r18
+ 292:	3f 93       	push	r19
+ 294:	4f 93       	push	r20
+ 296:	5f 93       	push	r21
+ 298:	6f 93       	push	r22
+ 29a:	7f 93       	push	r23
+ 29c:	8f 93       	push	r24
+ 29e:	9f 93       	push	r25
+ 2a0:	af 93       	push	r26
+ 2a2:	bf 93       	push	r27
+ 2a4:	ef 93       	push	r30
+ 2a6:	ff 93       	push	r31
+ 2a8:	df 93       	push	r29
+ 2aa:	cf 93       	push	r28
+ 2ac:	0f 92       	push	r0
+ 2ae:	cd b7       	in	r28, 0x3d	; 61
+ 2b0:	de b7       	in	r29, 0x3e	; 62
+	PORTB |= LED_BLUETOOTH;
+ 2b2:	a8 e3       	ldi	r26, 0x38	; 56
+ 2b4:	b0 e0       	ldi	r27, 0x00	; 0
+ 2b6:	e8 e3       	ldi	r30, 0x38	; 56
+ 2b8:	f0 e0       	ldi	r31, 0x00	; 0
+ 2ba:	80 81       	ld	r24, Z
+ 2bc:	81 60       	ori	r24, 0x01	; 1
+ 2be:	8c 93       	st	X, r24
+	unsigned char data = USART_Receive();
+ 2c0:	4f df       	rcall	.-354    	; 0x160 <USART_Receive>
+ 2c2:	89 83       	std	Y+1, r24	; 0x01
+}
+ 2c4:	0f 90       	pop	r0
+ 2c6:	cf 91       	pop	r28
+ 2c8:	df 91       	pop	r29
+ 2ca:	ff 91       	pop	r31
+ 2cc:	ef 91       	pop	r30
+ 2ce:	bf 91       	pop	r27
+ 2d0:	af 91       	pop	r26
+ 2d2:	9f 91       	pop	r25
+ 2d4:	8f 91       	pop	r24
+ 2d6:	7f 91       	pop	r23
+ 2d8:	6f 91       	pop	r22
+ 2da:	5f 91       	pop	r21
+ 2dc:	4f 91       	pop	r20
+ 2de:	3f 91       	pop	r19
+ 2e0:	2f 91       	pop	r18
+ 2e2:	0f 90       	pop	r0
+ 2e4:	0f be       	out	0x3f, r0	; 63
+ 2e6:	0f 90       	pop	r0
+ 2e8:	1f 90       	pop	r1
+ 2ea:	18 95       	reti
+
+000002ec <_exit>:
+ 2ec:	f8 94       	cli
+
+000002ee <__stop_program>:
+ 2ee:	ff cf       	rjmp	.-2      	; 0x2ee <__stop_program>
