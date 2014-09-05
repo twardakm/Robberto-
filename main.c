@@ -180,6 +180,7 @@ ISR (USART_RXC_vect)
 {
 	PORTB |= LED_BLUETOOTH;
 	unsigned char data = USART_Receive();
+	safety_variable=0;
 
 	switch (data)
 	{

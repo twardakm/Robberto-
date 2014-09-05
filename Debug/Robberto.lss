@@ -3,13 +3,13 @@ Robberto.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000494  00000000  00000000  00000074  2**1
+  0 .text         00000498  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .bss          00000001  00800060  00800060  00000508  2**0
+  1 .bss          00000001  00800060  00800060  0000050c  2**0
                   ALLOC
-  2 .stab         0000081c  00000000  00000000  00000508  2**2
+  2 .stab         00000828  00000000  00000000  0000050c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  3 .stabstr      000007b0  00000000  00000000  00000d24  2**0
+  3 .stabstr      000007b0  00000000  00000000  00000d34  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -57,7 +57,7 @@ Disassembly of section .text:
   3e:	b1 07       	cpc	r27, r17
   40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
   42:	02 d0       	rcall	.+4      	; 0x48 <main>
-  44:	25 c2       	rjmp	.+1098   	; 0x490 <_exit>
+  44:	27 c2       	rjmp	.+1102   	; 0x494 <_exit>
 
 00000046 <__bad_interrupt>:
   46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
@@ -716,90 +716,92 @@ ISR (USART_RXC_vect)
 	unsigned char data = USART_Receive();
  410:	4e df       	rcall	.-356    	; 0x2ae <USART_Receive>
  412:	89 83       	std	Y+1, r24	; 0x01
+	safety_variable=0;
+ 414:	10 92 60 00 	sts	0x0060, r1
 
 	switch (data)
- 414:	89 81       	ldd	r24, Y+1	; 0x01
- 416:	28 2f       	mov	r18, r24
- 418:	30 e0       	ldi	r19, 0x00	; 0
- 41a:	3b 83       	std	Y+3, r19	; 0x03
- 41c:	2a 83       	std	Y+2, r18	; 0x02
- 41e:	8a 81       	ldd	r24, Y+2	; 0x02
- 420:	9b 81       	ldd	r25, Y+3	; 0x03
- 422:	84 34       	cpi	r24, 0x44	; 68
- 424:	91 05       	cpc	r25, r1
- 426:	d9 f0       	breq	.+54     	; 0x45e <__vector_11+0x8a>
- 428:	2a 81       	ldd	r18, Y+2	; 0x02
- 42a:	3b 81       	ldd	r19, Y+3	; 0x03
- 42c:	25 34       	cpi	r18, 0x45	; 69
- 42e:	31 05       	cpc	r19, r1
- 430:	34 f4       	brge	.+12     	; 0x43e <__vector_11+0x6a>
- 432:	8a 81       	ldd	r24, Y+2	; 0x02
- 434:	9b 81       	ldd	r25, Y+3	; 0x03
- 436:	81 34       	cpi	r24, 0x41	; 65
- 438:	91 05       	cpc	r25, r1
- 43a:	79 f0       	breq	.+30     	; 0x45a <__vector_11+0x86>
- 43c:	12 c0       	rjmp	.+36     	; 0x462 <__stack+0x3>
- 43e:	2a 81       	ldd	r18, Y+2	; 0x02
- 440:	3b 81       	ldd	r19, Y+3	; 0x03
- 442:	23 35       	cpi	r18, 0x53	; 83
- 444:	31 05       	cpc	r19, r1
- 446:	39 f0       	breq	.+14     	; 0x456 <__vector_11+0x82>
- 448:	8a 81       	ldd	r24, Y+2	; 0x02
- 44a:	9b 81       	ldd	r25, Y+3	; 0x03
- 44c:	87 35       	cpi	r24, 0x57	; 87
- 44e:	91 05       	cpc	r25, r1
- 450:	41 f4       	brne	.+16     	; 0x462 <__stack+0x3>
+ 418:	89 81       	ldd	r24, Y+1	; 0x01
+ 41a:	28 2f       	mov	r18, r24
+ 41c:	30 e0       	ldi	r19, 0x00	; 0
+ 41e:	3b 83       	std	Y+3, r19	; 0x03
+ 420:	2a 83       	std	Y+2, r18	; 0x02
+ 422:	8a 81       	ldd	r24, Y+2	; 0x02
+ 424:	9b 81       	ldd	r25, Y+3	; 0x03
+ 426:	84 34       	cpi	r24, 0x44	; 68
+ 428:	91 05       	cpc	r25, r1
+ 42a:	d9 f0       	breq	.+54     	; 0x462 <__stack+0x3>
+ 42c:	2a 81       	ldd	r18, Y+2	; 0x02
+ 42e:	3b 81       	ldd	r19, Y+3	; 0x03
+ 430:	25 34       	cpi	r18, 0x45	; 69
+ 432:	31 05       	cpc	r19, r1
+ 434:	34 f4       	brge	.+12     	; 0x442 <__vector_11+0x6e>
+ 436:	8a 81       	ldd	r24, Y+2	; 0x02
+ 438:	9b 81       	ldd	r25, Y+3	; 0x03
+ 43a:	81 34       	cpi	r24, 0x41	; 65
+ 43c:	91 05       	cpc	r25, r1
+ 43e:	79 f0       	breq	.+30     	; 0x45e <__vector_11+0x8a>
+ 440:	12 c0       	rjmp	.+36     	; 0x466 <__stack+0x7>
+ 442:	2a 81       	ldd	r18, Y+2	; 0x02
+ 444:	3b 81       	ldd	r19, Y+3	; 0x03
+ 446:	23 35       	cpi	r18, 0x53	; 83
+ 448:	31 05       	cpc	r19, r1
+ 44a:	39 f0       	breq	.+14     	; 0x45a <__vector_11+0x86>
+ 44c:	8a 81       	ldd	r24, Y+2	; 0x02
+ 44e:	9b 81       	ldd	r25, Y+3	; 0x03
+ 450:	87 35       	cpi	r24, 0x57	; 87
+ 452:	91 05       	cpc	r25, r1
+ 454:	41 f4       	brne	.+16     	; 0x466 <__stack+0x7>
 	{
 	case 'W':
 		forward();
- 452:	1b de       	rcall	.-970    	; 0x8a <forward>
- 454:	07 c0       	rjmp	.+14     	; 0x464 <__stack+0x5>
+ 456:	19 de       	rcall	.-974    	; 0x8a <forward>
+ 458:	07 c0       	rjmp	.+14     	; 0x468 <__stack+0x9>
 		break;
 	case 'S':
 		backward();
- 456:	3c de       	rcall	.-904    	; 0xd0 <backward>
- 458:	05 c0       	rjmp	.+10     	; 0x464 <__stack+0x5>
+ 45a:	3a de       	rcall	.-908    	; 0xd0 <backward>
+ 45c:	05 c0       	rjmp	.+10     	; 0x468 <__stack+0x9>
 		break;
 	case 'A':
 		left();
- 45a:	5d de       	rcall	.-838    	; 0x116 <left>
- 45c:	03 c0       	rjmp	.+6      	; 0x464 <__stack+0x5>
+ 45e:	5b de       	rcall	.-842    	; 0x116 <left>
+ 460:	03 c0       	rjmp	.+6      	; 0x468 <__stack+0x9>
 		break;
 	case 'D':
 		right();
- 45e:	7e de       	rcall	.-772    	; 0x15c <right>
- 460:	01 c0       	rjmp	.+2      	; 0x464 <__stack+0x5>
+ 462:	7c de       	rcall	.-776    	; 0x15c <right>
+ 464:	01 c0       	rjmp	.+2      	; 0x468 <__stack+0x9>
 		break;
 	default:
 		turn_off_all_motors();
- 462:	9f de       	rcall	.-706    	; 0x1a2 <turn_off_all_motors>
+ 466:	9d de       	rcall	.-710    	; 0x1a2 <turn_off_all_motors>
 	}
 }
- 464:	0f 90       	pop	r0
- 466:	0f 90       	pop	r0
  468:	0f 90       	pop	r0
- 46a:	cf 91       	pop	r28
- 46c:	df 91       	pop	r29
- 46e:	ff 91       	pop	r31
- 470:	ef 91       	pop	r30
- 472:	bf 91       	pop	r27
- 474:	af 91       	pop	r26
- 476:	9f 91       	pop	r25
- 478:	8f 91       	pop	r24
- 47a:	7f 91       	pop	r23
- 47c:	6f 91       	pop	r22
- 47e:	5f 91       	pop	r21
- 480:	4f 91       	pop	r20
- 482:	3f 91       	pop	r19
- 484:	2f 91       	pop	r18
- 486:	0f 90       	pop	r0
- 488:	0f be       	out	0x3f, r0	; 63
+ 46a:	0f 90       	pop	r0
+ 46c:	0f 90       	pop	r0
+ 46e:	cf 91       	pop	r28
+ 470:	df 91       	pop	r29
+ 472:	ff 91       	pop	r31
+ 474:	ef 91       	pop	r30
+ 476:	bf 91       	pop	r27
+ 478:	af 91       	pop	r26
+ 47a:	9f 91       	pop	r25
+ 47c:	8f 91       	pop	r24
+ 47e:	7f 91       	pop	r23
+ 480:	6f 91       	pop	r22
+ 482:	5f 91       	pop	r21
+ 484:	4f 91       	pop	r20
+ 486:	3f 91       	pop	r19
+ 488:	2f 91       	pop	r18
  48a:	0f 90       	pop	r0
- 48c:	1f 90       	pop	r1
- 48e:	18 95       	reti
+ 48c:	0f be       	out	0x3f, r0	; 63
+ 48e:	0f 90       	pop	r0
+ 490:	1f 90       	pop	r1
+ 492:	18 95       	reti
 
-00000490 <_exit>:
- 490:	f8 94       	cli
+00000494 <_exit>:
+ 494:	f8 94       	cli
 
-00000492 <__stop_program>:
- 492:	ff cf       	rjmp	.-2      	; 0x492 <__stop_program>
+00000496 <__stop_program>:
+ 496:	ff cf       	rjmp	.-2      	; 0x496 <__stop_program>
