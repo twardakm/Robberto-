@@ -32,6 +32,12 @@ endif
 LSS += \
 Robberto.lss \
 
+FLASH_IMAGE += \
+Robberto.hex \
+
+EEPROM_IMAGE += \
+Robberto.eep \
+
 SIZEDUMMY += \
 sizedummy \
 
@@ -53,6 +59,18 @@ Robberto.lss: Robberto.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
+Robberto.hex: Robberto.elf
+	@echo 'Create Flash image (ihex format)'
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Robberto.elf  "Robberto.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+Robberto.eep: Robberto.elf
+	@echo 'Create eeprom image (ihex format)'
+	-avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Robberto.elf  "Robberto.eep"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 sizedummy: Robberto.elf
 	@echo 'Invoking: Print Size'
 	-avr-size --format=avr --mcu=atmega8 Robberto.elf
@@ -61,10 +79,10 @@ sizedummy: Robberto.elf
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(ASM_DEPS)$(ELFS)$(LSS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS) Robberto.elf
+	-$(RM) $(OBJS)$(C_DEPS)$(ASM_DEPS)$(EEPROM_IMAGE)$(FLASH_IMAGE)$(ELFS)$(LSS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS) Robberto.elf
 	-@echo ' '
 
-secondary-outputs: $(LSS) $(SIZEDUMMY)
+secondary-outputs: $(LSS) $(FLASH_IMAGE) $(EEPROM_IMAGE) $(SIZEDUMMY)
 
 .PHONY: all clean dependents
 .SECONDARY:
