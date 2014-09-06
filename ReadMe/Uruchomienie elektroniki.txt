@@ -1,0 +1,28 @@
+1. Pod³¹czenie bluetooth
+	a. Wed³ug zdjêcia bluetooth.jpg. (RXD i TXD 'poœrodku', +3V3 i GND 'na dole')
+	b. Uwaga! Zamiana RXD i TXD niczym nie grozi (nie bêdzie dzia³aæ), zamiana zasilania to spalenie modu³u!
+
+2. Pod³¹czenie silników
+	a. Byle jak do dwóch bocznych zacisków, po przetestowaniu trzeba poprze³¹czaæ, ¿eby przód to przód, ty³ to ty³ itd.
+
+3. Pod³¹czenie zasilania
+	a. Do górnych zacisków GND oraz maksymalnie 15V, optymalnie 13V.
+
+4. Dodanie bluetooth do komputera
+	a. Po w³¹czeniu zasilania nale¿y wejœæ w ustawienia bluetooth na komputerze i dodaæ urz¹dzenie "HC-05"
+	b. Kod to 1234
+	c. Poczekaæ na ustalenie po³¹czenia (dioda na bluetooth zamiast migaæ szybko zacznie migaæ powoli)
+
+5. Od³¹czyæ na chwilê od zasilania
+
+6. Pod³¹czyæ ponownie (dwa powy¿sze punkty tylko wtedy gdy pierwszy raz dodajemy urz¹dzenie bluetooth
+
+7. Uruchomiæ program Robberto!.exe znajduj¹cy siê w folderze LabVIEW exe
+
+8. Klikn¹æ bluetooth connect
+
+9. Poczekaæ na po³¹czenie
+
+10. Poruszanie silnikami za pomoc¹ strza³ek na klawiaturze
+
+11. Enjoy!

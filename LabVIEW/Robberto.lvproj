@@ -138,6 +138,44 @@
 				<Property Name="TgtF_targetfileGUID" Type="Str">{8D31CF1E-BFEE-4FAB-AC90-991853A95B09}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">Main.exe</Property>
 			</Item>
+			<Item Name="Robberto!" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{8BA5E3AF-2A55-4C98-8DE9-C9EAF82632C0}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{A69F1B2B-0CE5-4394-9AE4-4E3C7BBB0B04}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{4C3BB3A8-7EBD-4908-B960-B007E2713A29}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">Robberto!</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../LabVIEW exe</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{A6C9C949-073B-4F08-88E0-284EDFE2E6E3}</Property>
+				<Property Name="Bld_version.build" Type="Int">1</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">Robberto!.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../LabVIEW exe/Robberto!.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../LabVIEW exe/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{7515A063-A88F-445E-B2AB-431B534A7DCD}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/synergia Main.vi</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">Robberto!</Property>
+				<Property Name="TgtF_internalName" Type="Str">Robberto!</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2014 </Property>
+				<Property Name="TgtF_productName" Type="Str">Robberto!</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{5AFA48BD-1624-4D7E-AE89-F0B88BCEC0D0}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">Robberto!.exe</Property>
+			</Item>
 		</Item>
 	</Item>
 </Project>

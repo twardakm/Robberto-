@@ -103,7 +103,7 @@ void led_blinking_init()
 	DDRB |= LED_BLUE;
 
 	// Timer 0 Configuration
-	TCCR0 |= 0b101; // prescaler 1024
+	TCCR0 |= 0b100; // prescaler 256
 	TIMSK |= 1; // interrupt
 }
 
@@ -186,17 +186,23 @@ ISR (USART_RXC_vect)
 	{
 	case 'W':
 		forward();
+		USART_Transmit(data);
 		break;
 	case 'S':
 		backward();
+		USART_Transmit(data);
 		break;
 	case 'A':
 		left();
+		USART_Transmit(data);
 		break;
 	case 'D':
 		right();
+		USART_Transmit(data);
 		break;
 	default:
 		turn_off_all_motors();
+		USART_Transmit(data);
+		break;
 	}
 }
